@@ -37,8 +37,6 @@ export async function executeAsGM(name, data) {
     return true;
   }
   if (!game.users.activeGM) return false;
-  // Note: userId is client-supplied. Fine for a trusted table; handlers still
-  // validate ownership against it.
   game.socket.emit(EVENT, { name, data, userId: game.user.id });
   return true;
 }
