@@ -17,7 +17,7 @@
           },
           "Scaling": {
             "Name": "Reroll Bonus: Scale by Level",
-            "Hint": "Use the level tiers (see Scaling Tiers) instead of the flat Amount. Default: 1d4 at level 1, 1d6 at 7, 1d8 at 13."
+            "Hint": "Use level tiers (Edit Tiers) instead of the flat Amount. Default: 1d4 at level 1, 1d6 at 7, 1d8 at 13."
           },
           "TiersMenu": {
             "Name": "Reroll Bonus: Scaling Tiers",
@@ -44,22 +44,27 @@
         "Settings": {
           "Enabled": {
             "Name": "Hero Die: Enable",
-            "Hint": "Give the Reroll Bonus die its own Dice So Nice appearance. Only applies to dice bonuses, not flat +1/+2/+3."
+            "Hint": "Give the Reroll Bonus die a bright, polished metal look in Dice So Nice, overriding the roller's colorset and texture. Only applies to dice bonuses, not flat +1/+2/+3."
           },
           "Color": {
             "Name": "Hero Die: Color",
-            "Hint": "Gold, silver, or your own color (set below)."
+            "Hint": "Polished Gold (white numbers), Chrome Silver (bright blue numbers, white halo), or Custom (colors below)."
           },
           "CustomColor": {
-            "Name": "Hero Die: Custom Color",
-            "Hint": "Used when Color is set to Custom. Number color is picked automatically for contrast."
+            "Name": "Hero Die: Custom Die Color",
+            "Hint": "Die color when Color is set to Custom. Rendered as polished chrome, so pick a lighter shade than you'd expect."
+          },
+          "CustomNumberColor": {
+            "Name": "Hero Die: Custom Number Color",
+            "Hint": "Number color when Color is set to Custom. The outline is a darker shade of this color."
           }
         },
         "Color": {
-          "Gold": "Gold",
-          "Silver": "Silver",
+          "Gold": "Polished Gold",
+          "Silver": "Chrome Silver",
           "Custom": "Custom"
-        }
+        },
+        "ColorsetName": "Hero Die: {color}"
       },
       "KeepBetter": {
         "Settings": {

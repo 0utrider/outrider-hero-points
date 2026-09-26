@@ -64,3 +64,9 @@
 .ohp-torch-hud i {
   color: #e67e22;
 }
+
+/* "Edit Tiers" button moved next to the Scale by Level checkbox */
+.ohp-tiers-button {
+  flex: 0 0 auto;
+  margin-left: 0.5em;
+}

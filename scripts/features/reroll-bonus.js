@@ -29,6 +29,25 @@ export function init() {
 export function ready() {
   Hooks.on(`${HOOK_PREFIX}.preReroll`, onPreReroll);
   Hooks.on("renderChatMessageHTML", onRenderChatMessage);
+  Hooks.on("renderSettingsConfig", moveTiersButton);
+}
+
+/**
+ * Foundry always lists settings menus at the top of a module's section. Move the
+ * "Edit Tiers" button next to the "Scale by Level" checkbox and drop the
+ * now-empty menu row. The button keeps its core data-action, so it still opens.
+ */
+function moveTiersButton(_app, html) {
+  const root = html instanceof HTMLElement ? html : html[0];
+  const button = root?.querySelector(`button[data-key="${MODULE_ID}.${id}.tiersMenu"]`);
+  const scaling = root?.querySelector(`[name="${MODULE_ID}.${id}.scaling"]`);
+  const fields = scaling?.closest(".form-fields");
+  if (!button || !fields || fields.contains(button)) return;
+
+  const menuRow = button.closest(".form-group");
+  button.classList.add("ohp-tiers-button");
+  fields.append(button);
+  menuRow?.remove();
 }
 
 /** Tiers sorted by level, invalid rows dropped. */
