@@ -2,7 +2,7 @@
   "id": "outrider-hero-points",
   "title": "Outrider's Hero Points",
   "description": "Configurable Hero Point enhancements for Pathfinder 2e and Starfinder 2e: reroll bonus (flat, dice, or level-scaled), polished-metal Hero Die, keep-the-better rerolls, and Pass the Torch.",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "authors": [
     {
       "name": "David Outrider"

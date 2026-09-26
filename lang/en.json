@@ -48,15 +48,19 @@
           },
           "Color": {
             "Name": "Hero Die: Color",
-            "Hint": "Polished Gold (white numbers), Chrome Silver (bright blue numbers, white halo), or Custom (colors below)."
+            "Hint": "Polished Gold (white numbers), Chrome Silver (bright blue numbers, white halo), or Custom (plain die, colors below)."
           },
           "CustomColor": {
             "Name": "Hero Die: Custom Die Color",
-            "Hint": "Die color when Color is set to Custom. Rendered as polished chrome, so pick a lighter shade than you'd expect."
+            "Hint": "Die color when Color is set to Custom. Custom dice use a plain (non-metallic) finish. Default: white."
           },
           "CustomNumberColor": {
             "Name": "Hero Die: Custom Number Color",
-            "Hint": "Number color when Color is set to Custom. The outline is a darker shade of this color."
+            "Hint": "Number color when Color is set to Custom. Default: white."
+          },
+          "CustomOutlineColor": {
+            "Name": "Hero Die: Custom Outline Color",
+            "Hint": "Outline around the numbers when Color is set to Custom. Default: black."
           }
         },
         "Color": {
