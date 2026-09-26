@@ -1,6 +1,6 @@
 {
   "id": "outrider-hero-points",
-  "title": "Outrider's PF2e SF2e Hero Points",
+  "title": "Outrider's Hero Points",
   "description": "Configurable Hero Point enhancements for Pathfinder 2e and Starfinder 2e. Features: reroll bonus (flat or dice, default +1d4).",
   "version": "1.3.0",
   "authors": [
@@ -43,6 +43,7 @@
       "path": "lang/en.json"
     }
   ],
+  "license": "GPL-3.0-or-later",
   "url": "https://github.com/0utrider/outrider-hero-points",
   "manifest": "https://raw.githubusercontent.com/0utrider/outrider-hero-points/main/module.json",
   "download": "https://github.com/0utrider/outrider-hero-points/releases/latest/download/outrider-hero-points.zip"

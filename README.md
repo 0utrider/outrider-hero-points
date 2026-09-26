@@ -1,6 +1,6 @@
-# Outrider's PF2e SF2e Hero Points
+# Outrider's Hero Points
 
-Hero Point enhancements for **Pathfinder 2e** and **Starfinder 2e** on Foundry VTT (v13 to v14). SF2e shares PF2e's API (`game.pf2e`, `pf2e.*` hooks), so one codebase serves both. Each feature is independently toggled in **Configure Settings → Outrider's PF2e SF2e Hero Points**.
+Hero Point enhancements for **Pathfinder 2e** and **Starfinder 2e** on Foundry VTT (v13 to v14). SF2e shares PF2e's API (`game.pf2e`, `pf2e.*` hooks), so one codebase serves both. Each feature is independently toggled in **Configure Settings → Outrider's Hero Points**.
 
 ## Features
 
@@ -35,3 +35,7 @@ styles/main.css
 1. Create `scripts/features/<name>.js` exporting `id`, `init()`, and optionally `ready()`.
 2. Use `featureSettings(id, "<I18nKey>")` for settings; strings go under `OHP.Features.<I18nKey>`.
 3. Import it and append it to `FEATURES` in `features/index.js`.
+
+## License
+
+GPL-3.0-or-later. See `LICENSE`.
