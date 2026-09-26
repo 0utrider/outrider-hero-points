@@ -2,7 +2,8 @@ import { MODULE_ID, I18N } from "./constants.js";
 
 /**
  * Feature-scoped settings helper. Keys are namespaced `<featureId>.<key>` and
- * i18n resolves to OHP.Features.<Feature>.Settings.<Key>.{Name,Hint}.
+ * i18n resolves to OHP.Features.<Feature>.Settings.<Key>.{Name,Hint,Label}.
+ * Pass `config: false` in data for hidden settings (e.g. data backing a menu).
  */
 export function featureSettings(featureId, i18nKey) {
   const fullKey = (key) => `${featureId}.${key}`;
@@ -15,6 +16,15 @@ export function featureSettings(featureId, i18nKey) {
         hint: `${i18n(key)}.Hint`,
         scope: "world",
         config: true,
+        ...data,
+      });
+    },
+    registerMenu(key, data) {
+      game.settings.registerMenu(MODULE_ID, fullKey(key), {
+        name: `${i18n(key)}.Name`,
+        label: `${i18n(key)}.Label`,
+        hint: `${i18n(key)}.Hint`,
+        restricted: true,
         ...data,
       });
     },

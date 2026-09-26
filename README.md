@@ -4,9 +4,24 @@ Hero Point enhancements for **Pathfinder 2e** and **Starfinder 2e** on Foundry V
 
 ## Features
 
-### Reroll Bonus
-Adds a bonus to Hero Point rerolls: `+1`, `+2`, `+3`, `+1d4` (default), `+1d6`, `+1d8`, `+1d10`, `+1d12`, `+1d20`.
-Hooks `pf2e.preReroll`, so the total, degree of success, Dice So Nice, and the chat card all reflect it. Mythic Point rerolls are untouched.
+All toggles live in **Configure Settings → Outrider's Hero Points**.
+
+| Feature | Default | What it does |
+|---|---|---|
+| Reroll Bonus | on, `+1d4` | Adds `+1`/`+2`/`+3` or `+1d4`…`+1d20` to Hero Point rerolls. |
+| Reroll Bonus: Scale by Level | off | Bonus comes from GM-editable level tiers instead (default 1d4 @ 1, 1d6 @ 7, 1d8 @ 13). Tiers can scale down, and `+0` is allowed. |
+| Hero Die | on, gold | Gives the bonus die a Dice So Nice look: gold, silver, or a custom color. Tints the chat badge to match. |
+| Keep the Better | off | Hero Point rerolls keep the higher total instead of always the new roll. |
+| Pass the Torch | off | A player gives one Hero Point to an allied character (Token HUD button or macro). Runs on the GM's client, announced in chat. Needs a GM online. |
+
+Mythic Point rerolls are untouched by all features.
+
+### Macro
+
+```js
+game.modules.get("outrider-hero-points").api.passTheTorch();        // selected token or assigned character
+game.modules.get("outrider-hero-points").api.passTheTorch(actor);   // explicit giver
+```
 
 ## System coupling
 
@@ -23,16 +38,25 @@ grep -rn "@system-coupling" scripts/
 scripts/
   main.js              # boot: runs init/ready for every registered feature
   constants.js         # MODULE_ID, SUPPORTED_SYSTEMS, HOOK_PREFIX, slugs
-  settings.js          # featureSettings(): namespaced "<feature>.<key>" settings
+  settings.js          # featureSettings(): namespaced "<feature>.<key>" settings + menus
+  lib/
+    bonus.js           # bonus choices, term builder, bonus-die marker
+    reroll-context.js  # wraps Check.rerollFromMessage so preReroll handlers know the actor
+    socket.js          # GM relay (module socket, no socketlib dependency)
+  apps/
+    scaling-tiers.js   # ApplicationV2 tier editor
   features/
-    index.js           # FEATURES registry, add new features here
+    index.js           # FEATURES registry, add new features here (order matters)
     reroll-bonus.js
+    hero-die.js
+    keep-better.js
+    pass-the-torch.js
 lang/en.json           # OHP.Features.<Feature>.*
 styles/main.css
 ```
 
 ## Adding a feature
-1. Create `scripts/features/<name>.js` exporting `id`, `init()`, and optionally `ready()`.
+1. Create `scripts/features/<name>.js` exporting `id`, `init()`, and optionally `ready()`. Anything needing GM authority: `registerGMHandler()` in `init()`, `executeAsGM()` at runtime.
 2. Use `featureSettings(id, "<I18nKey>")` for settings; strings go under `OHP.Features.<I18nKey>`.
 3. Import it and append it to `FEATURES` in `features/index.js`.
 

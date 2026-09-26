@@ -1,5 +1,7 @@
 import { MODULE_ID, SUPPORTED_SYSTEMS } from "./constants.js";
 import { FEATURES } from "./features/index.js";
+import { installRerollContext } from "./lib/reroll-context.js";
+import { initSocket } from "./lib/socket.js";
 
 const log = (...args) => console.log(`${MODULE_ID} |`, ...args);
 
@@ -19,8 +21,15 @@ Hooks.once("init", () => {
     FEATURES.length = 0;
     return;
   }
+  // Public API for macros: game.modules.get("outrider-hero-points").api
+  game.modules.get(MODULE_ID).api = {};
   runPhase("init");
   log(`initialized ${FEATURES.length} feature(s): ${FEATURES.map((f) => f.id).join(", ")}`);
 });
 
-Hooks.once("ready", () => runPhase("ready"));
+Hooks.once("ready", () => {
+  if (!FEATURES.length) return;
+  installRerollContext();
+  initSocket();
+  runPhase("ready");
+});

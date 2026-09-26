@@ -13,3 +13,6 @@ export const SUPPORTED_SYSTEMS = ["pf2e", "sf2e"];
 export const HOOK_PREFIX = "pf2e";
 // @system-coupling: resource slug shared by both systems via actor.getResource().
 export const HERO_POINT_SLUG = "hero-points";
+
+/** Marker set on the bonus die/number term's options so other features can find it. */
+export const BONUS_TERM_MARKER = "ohpBonus";

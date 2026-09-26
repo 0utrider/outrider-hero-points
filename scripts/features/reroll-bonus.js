@@ -1,29 +1,29 @@
 import { MODULE_ID, I18N, HOOK_PREFIX, HERO_POINT_SLUG } from "../constants.js";
 import { featureSettings } from "../settings.js";
+import { BONUS_CHOICES, TIER_BONUS_CHOICES, buildBonusTerms } from "../lib/bonus.js";
+import { getRerollActor } from "../lib/reroll-context.js";
+import { ScalingTiersMenu } from "../apps/scaling-tiers.js";
 
 export const id = "rerollBonus";
 const I18N_KEY = "RerollBonus";
 const FLAG = `${MODULE_ID}.${id}`; // key stored on roll.options
 
-const BONUS_CHOICES = {
-  "1": "+1",
-  "2": "+2",
-  "3": "+3",
-  "1d4": "+1d4",
-  "1d6": "+1d6",
-  "1d8": "+1d8",
-  "1d10": "+1d10",
-  "1d12": "+1d12",
-  "1d20": "+1d20",
-};
+export const DEFAULT_TIERS = [
+  { level: 1, bonus: "1d4" },
+  { level: 7, bonus: "1d6" },
+  { level: 13, bonus: "1d8" },
+];
 
-const settings = featureSettings(id, I18N_KEY);
+export const settings = featureSettings(id, I18N_KEY);
 const t = (key) => `${I18N}.Features.${I18N_KEY}.${key}`;
 
 export function init() {
   settings.register("enabled", { type: Boolean, default: true });
   settings.register("bonus", { type: String, choices: BONUS_CHOICES, default: "1d4" });
   settings.register("label", { type: String, default: "" });
+  settings.register("scaling", { type: Boolean, default: false });
+  settings.register("tiers", { type: Array, default: DEFAULT_TIERS, config: false });
+  settings.registerMenu("tiersMenu", { icon: "fa-solid fa-stairs", type: ScalingTiersMenu });
 }
 
 export function ready() {
@@ -31,14 +31,27 @@ export function ready() {
   Hooks.on("renderChatMessageHTML", onRenderChatMessage);
 }
 
-/** [OperatorTerm("+"), Die | NumericTerm] for a bonus like "1d4" or "2". */
-function buildBonusTerms(bonus, flavor) {
-  const { OperatorTerm, NumericTerm, Die } = foundry.dice.terms;
-  const dieMatch = /^(\d+)d(\d+)$/.exec(bonus);
-  const term = dieMatch
-    ? new Die({ number: Number(dieMatch[1]), faces: Number(dieMatch[2]), options: { flavor } })
-    : new NumericTerm({ number: Number(bonus), options: { flavor } });
-  return [new OperatorTerm({ operator: "+" }), term];
+/** Tiers sorted by level, invalid rows dropped. */
+export function getTiers() {
+  const raw = settings.get("tiers");
+  return (Array.isArray(raw) ? raw : DEFAULT_TIERS)
+    .map((r) => ({ level: Number(r?.level), bonus: String(r?.bonus) }))
+    .filter((r) => Number.isInteger(r.level) && r.bonus in TIER_BONUS_CHOICES)
+    .sort((a, b) => a.level - b.level);
+}
+
+/**
+ * Pick the bonus for this reroll. Scaling uses the highest tier at or below the
+ * actor's level; below the lowest tier = no bonus. If the actor can't be
+ * resolved, fall back to the flat bonus.
+ */
+function resolveBonus(actor) {
+  if (settings.get("scaling") && actor) {
+    const level = Number(actor.level ?? 0);
+    const tier = getTiers().filter((r) => r.level <= level).at(-1);
+    return { bonus: tier?.bonus ?? "0", tierLevel: tier?.level ?? null };
+  }
+  return { bonus: settings.get("bonus"), tierLevel: null };
 }
 
 /**
@@ -53,13 +66,14 @@ function onPreReroll(_oldRoll, newRoll, resource, _keep) {
   if (resource?.slug !== HERO_POINT_SLUG) return;
   if (!settings.get("enabled")) return;
 
-  const bonus = settings.get("bonus");
-  if (!(bonus in BONUS_CHOICES)) return;
-
+  const { bonus, tierLevel } = resolveBonus(getRerollActor());
   const label = settings.get("label").trim() || game.i18n.localize(t("LabelDefault"));
-  newRoll.terms.push(...buildBonusTerms(bonus, label));
+  const terms = buildBonusTerms(bonus, label);
+  if (!terms) return;
+
+  newRoll.terms.push(...terms);
   newRoll.resetFormula();
-  newRoll.options[FLAG] = { bonus, label };
+  newRoll.options[FLAG] = { bonus, label, tierLevel };
 }
 
 function onRenderChatMessage(message, html) {
@@ -70,11 +84,14 @@ function onRenderChatMessage(message, html) {
   const anchor = html.querySelector(".reroll-second") ?? html.querySelector(".message-content");
   if (!anchor || anchor.querySelector(".ohp-badge")) return;
 
+  const text = game.i18n.format(t("Badge"), {
+    label: foundry.utils.escapeHTML?.(data.label) ?? data.label,
+    bonus: TIER_BONUS_CHOICES[data.bonus] ?? data.bonus,
+  });
+  const tier = data.tierLevel != null ? ` ${game.i18n.format(t("BadgeTier"), { level: data.tierLevel })}` : "";
+
   const badge = document.createElement("div");
   badge.className = "ohp-badge";
-  badge.innerHTML = `<i class="fa-solid fa-circle-h"></i> ${game.i18n.format(t("Badge"), {
-    label: foundry.utils.escapeHTML?.(data.label) ?? data.label,
-    bonus: BONUS_CHOICES[data.bonus] ?? data.bonus,
-  })}`;
+  badge.innerHTML = `<i class="fa-solid fa-circle-h"></i> ${text}${tier}`;
   anchor.prepend(badge);
 }

@@ -5,19 +5,98 @@
         "Settings": {
           "Enabled": {
             "Name": "Reroll Bonus: Enable",
-            "Hint": "When enabled, rerolling a check with a Hero Point adds the bonus below to the new roll's total."
+            "Hint": "When enabled, rerolling a check with a Hero Point adds a bonus to the new roll's total."
           },
           "Bonus": {
             "Name": "Reroll Bonus: Amount",
-            "Hint": "Added to the rerolled d20 total. Dice bonuses are rolled (and shown by Dice So Nice) alongside the d20."
+            "Hint": "Flat bonus added to the rerolled d20 total. Ignored when Scaling is enabled. Dice bonuses are rolled (and shown by Dice So Nice) alongside the d20."
           },
           "Label": {
             "Name": "Reroll Bonus: Label",
             "Hint": "Flavor text on the bonus term in the roll formula and chat badge. Blank = \"Hero Point\"."
+          },
+          "Scaling": {
+            "Name": "Reroll Bonus: Scale by Level",
+            "Hint": "Use the level tiers (see Scaling Tiers) instead of the flat Amount. Default: 1d4 at level 1, 1d6 at 7, 1d8 at 13."
+          },
+          "TiersMenu": {
+            "Name": "Reroll Bonus: Scaling Tiers",
+            "Label": "Edit Tiers",
+            "Hint": "Set the bonus die for each level tier. Tiers can scale down as well as up."
           }
         },
+        "Tiers": {
+          "Title": "Hero Point Scaling Tiers",
+          "Hint": "At the listed level and above, a Hero Point reroll gets that bonus. The highest tier at or below the character's level wins. Characters below the lowest tier get no bonus.",
+          "Level": "Level",
+          "Bonus": "Bonus",
+          "Add": "Add Tier",
+          "Remove": "Remove Tier",
+          "Reset": "Defaults",
+          "Save": "Save",
+          "Empty": "No tiers. Hero Point rerolls get no bonus while Scaling is enabled."
+        },
         "LabelDefault": "Hero Point",
-        "Badge": "{label} bonus: {bonus}"
+        "Badge": "{label} bonus: {bonus}",
+        "BadgeTier": "(level {level}+ tier)"
+      },
+      "HeroDie": {
+        "Settings": {
+          "Enabled": {
+            "Name": "Hero Die: Enable",
+            "Hint": "Give the Reroll Bonus die its own Dice So Nice appearance. Only applies to dice bonuses, not flat +1/+2/+3."
+          },
+          "Color": {
+            "Name": "Hero Die: Color",
+            "Hint": "Gold, silver, or your own color (set below)."
+          },
+          "CustomColor": {
+            "Name": "Hero Die: Custom Color",
+            "Hint": "Used when Color is set to Custom. Number color is picked automatically for contrast."
+          }
+        },
+        "Color": {
+          "Gold": "Gold",
+          "Silver": "Silver",
+          "Custom": "Custom"
+        }
+      },
+      "KeepBetter": {
+        "Settings": {
+          "Enabled": {
+            "Name": "Keep the Better: Enable",
+            "Hint": "Hero Point rerolls keep the higher total (old or new) instead of always taking the new roll. Totals include any Reroll Bonus."
+          }
+        }
+      },
+      "PassTheTorch": {
+        "Settings": {
+          "Enabled": {
+            "Name": "Pass the Torch: Enable",
+            "Hint": "Players can give one of their Hero Points to an allied character. Requires a GM to be logged in. Macro: game.modules.get(\"outrider-hero-points\").api.passTheTorch()"
+          },
+          "HudButton": {
+            "Name": "Pass the Torch: Token HUD Button",
+            "Hint": "Show a torch button on the Token HUD of characters you own."
+          }
+        },
+        "Title": "Pass the Torch",
+        "DialogTitle": "Pass the Torch",
+        "DialogText": "{name} has {value} Hero Point(s). Choose an ally to receive one.",
+        "Recipient": "Recipient",
+        "Full": "[full]",
+        "Give": "Pass the Torch",
+        "Cancel": "Cancel",
+        "Announce": "{giver} passes the torch! {recipient} gains a Hero Point.",
+        "Disabled": "Pass the Torch is disabled in the world settings.",
+        "NoGiver": "Select a token you own, or assign a character to your user.",
+        "NoPoints": "{name} has no Hero Points to give.",
+        "NoAllies": "No allied characters can receive a Hero Point.",
+        "NoGM": "Pass the Torch needs a GM online to complete the transfer.",
+        "Invalid": "Pass the Torch failed: giver or recipient not found.",
+        "NotOwner": "Pass the Torch failed: you don't own {name}.",
+        "NotAllied": "Pass the Torch failed: {name} is not an ally.",
+        "RecipientFull": "Pass the Torch failed: {name} already has the maximum Hero Points."
       }
     }
   }
