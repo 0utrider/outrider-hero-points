@@ -1,0 +1,24 @@
+{
+  "OHP": {
+    "Features": {
+      "RerollBonus": {
+        "Settings": {
+          "Enabled": {
+            "Name": "Reroll Bonus: Enable",
+            "Hint": "When enabled, rerolling a check with a Hero Point adds the bonus below to the new roll's total."
+          },
+          "Bonus": {
+            "Name": "Reroll Bonus: Amount",
+            "Hint": "Added to the rerolled d20 total. Dice bonuses are rolled (and shown by Dice So Nice) alongside the d20."
+          },
+          "Label": {
+            "Name": "Reroll Bonus: Label",
+            "Hint": "Flavor text on the bonus term in the roll formula and chat badge. Blank = \"Hero Point\"."
+          }
+        },
+        "LabelDefault": "Hero Point",
+        "Badge": "{label} bonus: {bonus}"
+      }
+    }
+  }
+}

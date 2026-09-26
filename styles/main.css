@@ -1,0 +1,11 @@
+.ohp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin: 0.25em 0;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  font-size: var(--font-size-12, 12px);
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+}
