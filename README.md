@@ -1,5 +1,11 @@
 # Outrider's Hero Points
 
+<div align="center">
+
+[![Part of Outrider's Pathfinder Tools](https://img.shields.io/badge/Part%20of-Outrider%27s%20Pathfinder%20Tools-7000d6?style=for-the-badge)](https://github.com/0utrider/pathfinder)
+
+</div>
+
 Hero Point enhancements for **Pathfinder 2e** and **Starfinder 2e** on Foundry VTT (v13 to v14). SF2e shares PF2e's API (`game.pf2e`, `pf2e.*` hooks), so one codebase serves both. Each feature is independently toggled in **Configure Settings → Outrider's Hero Points**.
 
 ## Features
@@ -8,7 +14,7 @@ All toggles live in **Configure Settings → Outrider's Hero Points**.
 
 | Feature | Default | What it does |
 |---|---|---|
-| Reroll Bonus | on, `+1d4` | Adds `+1`/`+2`/`+3` or `+1d4`…`+1d20` to Hero Point rerolls. |
+| Reroll Bonus | on, `+1d4` | Adds `+1`/`+2`/`+3` or a die (`+1d2`…`+5d2`, `+1d4`…`+3d4`, `+1d6`…`+1d20`) to Hero Point rerolls. |
 | Reroll Bonus: Scale by Level | off | Bonus comes from GM-editable level tiers instead (default 1d4 @ 1, 1d6 @ 7, 1d8 @ 13). Tiers can scale down, and `+0` is allowed. |
 | Hero Die | on, gold | Gives the bonus die a polished-metal Dice So Nice look: gold with white numbers, chrome silver with blue numbers, or a plain custom die (white die, white numbers, black outline by default; all three colors adjustable). Tints the chat badge to match. Needs Dice So Nice for the 3D dice. |
 | Keep the Better | off | Hero Point rerolls keep the higher total instead of always the new roll. |
